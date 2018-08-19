@@ -39,8 +39,20 @@ class Model {
     return {total, completed};
   }
 
+  getStorageStatus() {
+    let data = localStorage.getItem(STATUS_KEY);
+
+    if (data) {
+      return JSON.parse(data);
+    }
+    return {
+      lastTS: -1
+    }
+  }
+
   addItem(todoItem) {
     this.todos = this.todos.concat(todoItem);
+    this.save();
   }
 
   updateItem(id, data) {
@@ -51,6 +63,7 @@ class Model {
 
       return todo;
     });
+    this.save();
   }
 
   toggleItem(id) {
@@ -61,31 +74,31 @@ class Model {
 
       return todo;
     });
+    this.save();
   }
 
   removeItem(id) {
     this.todos = this.todos.filter(todo => {
       return (todo.id !== id);
     });
+    this.save();
   }
 
   load() {
-    this.todos = [
-      {
-        id: 1,
-        title: "Initial commit",
-        completed: true
-      }, {
-        id: 2,
-        title: "Add localStorage",
-        completed: false
-      }, {
-        id: 3,
-        title: "Build js bundle",
-        completed: false
-      }
-    ];
+    this.todos = JSON.parse(localStorage.getItem(MODEL_KEY) || '[]');
     // Emulate async loading
     return Promise.resolve();
+  }
+
+  save() {
+    try {
+      localStorage.setItem(MODEL_KEY, JSON.stringify(this.todos));
+      localStorage.setItem(STATUS_KEY, JSON.stringify({
+        lastTS: Date.now()
+      }));
+      this.trigger('saved');
+    } catch(e) {
+      this.trigger('error');
+    }
   }
 }

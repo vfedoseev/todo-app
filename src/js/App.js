@@ -1,5 +1,5 @@
-const directSorter = createSorter('title');
-const reverseSorter = createSorter('title', true);
+const directSorter = createSorter('title', false, title => title.toLowerCase());
+const reverseSorter = createSorter('title', true, title => title.toLowerCase());
 
 const KEYCODE_ENTER = 13;
 const KEYCODE_ESC = 27;
@@ -14,11 +14,16 @@ class App {
     this.inputEl = element.querySelector('.js-todo-input');
     this.todoList = element.querySelector('.js-todo-list');
     this.counterEl = element.querySelector('.js-todo-count');
+    this.statusEl = element.querySelector('.js-todo-status');
     this.sortBtn = element.querySelector('.js-todo-btn-sort');
 
     this._bindListeners();
+    // Handle model events to emulate external storage actions
+    this.todos.on('saved', this._renderStorageStatus.bind(this, 'success'));
+    this.todos.on('error', this._renderStorageStatus.bind(this, 'error'));
     this.todos.load().then(() => {
       this._render(true);
+      this._renderStorageStatus('success');
     });
   }
 
@@ -172,5 +177,13 @@ class App {
     this.counterEl.innerHTML = infoTemplate(this.todos.getInfo());
     this.sortOrderActive && this.sortBtn.classList.remove('todo-btn--inactive');
     this.sortBtn.innerText = this.sortOrderDirect ? 'A-Z' : 'Z-A';
+  }
+
+  _renderStorageStatus(status) {
+    let {lastTS} = this.todos.getStorageStatus();
+
+    this.statusEl.classList.toggle('todo-footer__status--success', status === 'success');
+    this.statusEl.classList.toggle('todo-footer__status--error', status === 'error');
+    this.statusEl.innerText = statusTemplate(status, lastTS);
   }
 }

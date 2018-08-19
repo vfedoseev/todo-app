@@ -20,3 +20,7 @@ let todoItemTemplate = function(todo) {
 let infoTemplate = function(info) {
   return `Completed: ${info.completed} / Total: ${info.total}`;
 }
+
+let statusTemplate = function(status, lastTS) {
+  return `Storage ${status} | Last saved: ${lastTS < 0 ? 'Never' : (new Date(lastTS)).toLocaleString()}`;
+}
