@@ -1,0 +1,20 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Simple ToDo app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev:style",
+    "dev:style": "npx node-sass -w ./src/scss/main.scss ./dist/style.css" 
+  },
+  "keywords": [
+    "todo",
+    "list",
+    "tasks"
+  ],
+  "author": "v.fedoseev",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^4.9.3"
+  }
+}

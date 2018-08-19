@@ -1,0 +1,146 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-shadow: border-box;
+  font-family: Helvetica, Arial, Sans-Serif; }
+
+* {
+  box-sizing: border-box; }
+
+body {
+  background-color: #393D3F; }
+
+.wrapper {
+  width: 100%;
+  height: 100%; }
+  @media only screen and (min-width: 480px) {
+    .wrapper {
+      margin-top: 25px; } }
+
+.todo-app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 0 5px 2px #212324; }
+  @media only screen and (min-width: 480px) {
+    .todo-app {
+      height: auto; } }
+
+.todo-header {
+  flex: 0 0 auto;
+  padding: 8px; }
+  .todo-header__input {
+    display: inline-block;
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 6px;
+    font-size: 24px;
+    font-weight: 100;
+    color: #393D3F; }
+
+.todo-content {
+  flex: 1 1 auto;
+  border-top: 1px solid #C1C1C1; }
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0; }
+  .todo-list__item {
+    position: relative;
+    display: inline-block;
+    padding: 8px;
+    border-bottom: 1px solid #757575;
+    list-style-type: none; }
+  .todo-list__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    border: none;
+    outline: none;
+    padding: 6px;
+    font-size: 18px;
+    font-weight: 100;
+    background: #E6E8E6;
+    color: #393D3F; }
+
+.todo-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #E6E8E6;
+  font-size: 18px; }
+  .todo-item__text {
+    flex: 1 1 auto; }
+    .todo-item--completed .todo-item__text {
+      text-decoration: line-through;
+      color: #757575; }
+  .todo-item__title {
+    display: inline-block;
+    cursor: pointer; }
+    .todo-item--completed .todo-item__title {
+      text-decoration: line-through;
+      color: #757575; }
+  .todo-item__controls {
+    flex: 0 0 auto; }
+
+.todo-footer {
+  flex: 0 0 auto; }
+  .todo-footer__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    font-size: 14px;
+    color: #C1C1C1; }
+  .todo-footer__status {
+    position: relative;
+    padding: 8px 8px 5px 8px;
+    font-size: 12px;
+    color: #C1C1C1; }
+    .todo-footer__status::before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 3px; }
+    .todo-footer__status--success::before {
+      background: #76B041; }
+    .todo-footer__status--error::before {
+      background: #E4572E; }
+    .todo-footer__status--loading::before {
+      background: #C1C1C1; }
+
+.todo-btn {
+  display: inline-block;
+  padding: 4px 6px;
+  outline: none;
+  border-radius: 2px;
+  background: #76B041;
+  border: 1px solid #76B041;
+  color: #E6E8E6;
+  font-size: 14px;
+  cursor: pointer; }
+  .todo-btn:focus, .todo-btn:hover {
+    outline: none; }
+  .todo-btn--transparent {
+    background: transparent;
+    border: none;
+    color: #E4572E; }
+  .todo-btn--lg {
+    font-size: 18px; }
+  .todo-btn--inactive {
+    background: transparent; }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="dist/style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="todo-app js-todo-app">
+      <header class="todo-header">
+        <input type="text" class="todo-header__input js-todo-input" placeholder="Type the task here">
+      </header>
+      <section class="todo-content">
+        <ul class="todo-list js-todo-list">
+        </ul>
+      </section>
+      <footer class="todo-footer">
+        <div class="todo-footer__info">
+          <div class="todo-count js-todo-count">
+          </div>
+          <div class="todo-controls">
+            <button class="todo-btn todo-btn--inactive js-todo-btn-sort">A-Z</button>
+          </div>
+        </div>
+        <div class="todo-footer__status todo-footer__status--success js-todo-status">
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="src/js/utils.js"></script>
+  <script src="src/js/template.js"></script>
+  <script src="src/js/Model.js"></script>
+  <script src="src/js/App.js"></script>
+  <script>
+    let app = new App(document.querySelector('.js-todo-app'));
+  </script>
+</body>
+</html>
