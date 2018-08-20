@@ -1,4 +1,4 @@
-let todoItemTemplate = function(todo) {
+export function todoItemTemplate(todo) {
   let statusClassName = !!todo.completed ? 'todo-item--completed' : '';
   return `<li class="todo-list__item" data-id="${todo.id}">
     <span class="todo-item ${statusClassName}" data-action="toggle">
@@ -17,10 +17,10 @@ let todoItemTemplate = function(todo) {
   </li>`;
 }
 
-let infoTemplate = function(info) {
+export function infoTemplate(info) {
   return `Completed: ${info.completed} / Total: ${info.total}`;
 }
 
-let statusTemplate = function(status, lastTS) {
+export function statusTemplate(status, lastTS) {
   return `Storage ${status} | Last saved: ${lastTS < 0 ? 'Never' : (new Date(lastTS)).toLocaleString()}`;
 }

@@ -1,8 +1,8 @@
-let uuid = function() {
+export function uuid() {
   return Math.floor(Math.random() * 1E6);
 }
 
-let createSorter = function(propName, reverse = false, propHandler) {
+export function createSorter(propName, reverse = false, propHandler) {
   return function(a, b) {
     let ap = a[propName];
     let bp = b[propName];
@@ -23,4 +23,15 @@ let createSorter = function(propName, reverse = false, propHandler) {
 
     return reverse ? -result : result;
   }
+}
+
+export function getItemId(el) {
+  let itemWrapper = el.closest('[data-id]');
+
+  if (!itemWrapper) {
+    return null;
+  }
+
+  let id = itemWrapper.getAttribute('data-id');
+  return parseInt(id, 10);
 }

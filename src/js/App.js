@@ -1,3 +1,7 @@
+import Model from './Model';
+import {uuid, createSorter, getItemId} from './utils';
+import {todoItemTemplate, infoTemplate, statusTemplate} from './template';
+
 const directSorter = createSorter('title', false, title => title.toLowerCase());
 const reverseSorter = createSorter('title', true, title => title.toLowerCase());
 
@@ -18,11 +22,12 @@ class App {
     this.sortBtn = element.querySelector('.js-todo-btn-sort');
 
     this._bindListeners();
+
     // Handle model events to emulate external storage actions
     this.todos.on('saved', this._renderStorageStatus.bind(this, 'success'));
     this.todos.on('error', this._renderStorageStatus.bind(this, 'error'));
     this.todos.load().then(() => {
-      this._render(true);
+      this._render();
       this._renderStorageStatus('success');
     });
   }
@@ -48,16 +53,13 @@ class App {
   }
 
   _listClickHandler(event) {
-    let action, id;
     let render = false;
     let target = event.target;
     let actionWrapper = target.closest('[data-action]');
-    let itemWrapper = target.closest('[data-id]');
+    let id = getItemId(target);
 
-    if (actionWrapper && itemWrapper) {
-      action = actionWrapper.getAttribute('data-action');
-      id = itemWrapper.getAttribute('data-id');
-      id = parseInt(id, 10);
+    if (actionWrapper && id) {
+      let action = actionWrapper.getAttribute('data-action');
 
       switch (action) {
         case 'toggle':
@@ -104,11 +106,9 @@ class App {
   }
 
   _finishEdit(event) {
-    let itemWrapper = event.target.closest('[data-id]');
+    let id = getItemId(event.target);
 
-    if (itemWrapper) {
-      let id = itemWrapper.getAttribute('data-id');
-      id = parseInt(id, 10);
+    if (id) {
       let value = event.target.value;
 
       if (value.trim() === '') {
@@ -162,7 +162,7 @@ class App {
     this.editInput.parentNode && this.editInput.parentNode.removeChild(this.editInput);
   }
 
-  _render(force) {
+  _render() {
     let todos = this.todos.getAll();
 
     if (this.sortOrderActive) {
@@ -176,7 +176,9 @@ class App {
   _renderFooter() {
     this.counterEl.innerHTML = infoTemplate(this.todos.getInfo());
     this.sortOrderActive && this.sortBtn.classList.remove('todo-btn--inactive');
-    this.sortBtn.innerText = this.sortOrderDirect ? 'A-Z' : 'Z-A';
+    this.sortBtn.innerText = this.sortOrderActive ?
+      (this.sortOrderDirect ? 'A-Z' : 'Z-A') :
+      'Sort';
   }
 
   _renderStorageStatus(status) {
@@ -187,3 +189,5 @@ class App {
     this.statusEl.innerText = statusTemplate(status, lastTS);
   }
 }
+
+export default App;
